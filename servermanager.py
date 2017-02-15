@@ -11,12 +11,20 @@ import time
 import ds_pi_communication
 import rio_pi_communication
 #mouse libraries
-import field_coordinates
+#import field_coordinates
 
+startTime = time.time()
+
+def keepTime(startTime):
+	while 1:
+		elapsedTime = (time.time() - startTime)
+		return(elapsedTime)
+		
 def echo(conn):
 	string = conn.recv(1024)
 	conn.send(string)
 	threadMessage(string)
+
 
 def threadMessage(message):
 	#prints "THREAD_NAME: message"
@@ -55,7 +63,7 @@ class ClientManager(threading.Thread):
 			return
 
 host = '10.44.15.35'	# IP Address of the server-side processor
-port = 5801				# Port Address of server-side processor
+port = 5800				# Port Address of server-side processor
 
 server_manager = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 time.sleep(.1)
