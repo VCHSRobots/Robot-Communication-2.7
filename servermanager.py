@@ -11,7 +11,7 @@ import time
 import ds_pi_communication
 import rio_pi_communication
 #mouse libraries
-#import field_coordinates
+import field_coordinates
 
 startTime = time.time()
 
@@ -53,7 +53,8 @@ class ClientManager(threading.Thread):
 			threadMessage('RoboRIO Program ended.  Closing Thread.')
 			conn.close()
 			return
-		elif byteRequest == (b'Requesting field_coordinates\r\n'):
+		elif byteRequest == (b'Requesting field_coordinates\n'):
+			conn.send("Request recieved")
 			field_coordinates.run(conn, addr)
 			threadMessage('Field Coordinates Program ended.  Closing Thread.')
 			conn.close()
@@ -62,7 +63,7 @@ class ClientManager(threading.Thread):
 			threadMessage("Error in request.  Thread closing.")
 			return
 
-host = '10.44.15.35'	# IP Address of the server-side processor
+host = '10.44.15.21'	# IP Address of the server-side processor
 port = 5800				# Port Address of server-side processor
 
 server_manager = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
